@@ -8,7 +8,7 @@ import time
 import sched
 import open3d as o3d
 import numpy as np
-from edith_msgs.msg import Object, CandidateObject, ObjectMatch, ObjectStateClass
+from obj_det_ppf_matching_msgs.msg import Object, CandidateObject, ObjectMatch, ObjectStateClass
 from mongodb_store.message_store import MessageStoreProxy
 from visualization_msgs.msg import Marker, MarkerArray
 from geometry_msgs.msg import Point
@@ -111,9 +111,9 @@ class VisualizationService(object):
                     candidate_objects = np.concatenate((candidate_objects, np.asarray(self.pcl_segment.points)), axis=0)
                     candidate_objects_colors = np.concatenate((candidate_objects_colors, np.asarray(self.pcl_segment.colors)), axis=0)
                 if candidateObject.state == ObjectStateClass.NEW:
-                    self.color_pcl(self.pcl_segment, (0, 200, 0))
-                # elif candidateObject.state == ObjectStateClass.REMOVED:
-                #     self.color_pcl(self.pcl_segment, (255, 0, 0))
+                    self.color_pcl(self.pcl_segment, (0, 200, 0)) #green
+                elif candidateObject.state == ObjectStateClass.REMOVED:
+                     self.color_pcl(self.pcl_segment, (255, 0, 0)) #red
                 elif candidateObject.state == ObjectStateClass.DISPLACED:
                     color_flag = False
                     center = self.pcl_segment.get_center()
@@ -131,7 +131,7 @@ class VisualizationService(object):
                             start.x = center_model[0]
                             start.y = center_model[1]
                             start.z = center_model[2]
-                            self.color_pcl(orh.rospc_to_o3dpc(obj.obj_cloud_no_normals), (255, 0, 255))
+                            self.color_pcl(orh.rospc_to_o3dpc(obj.obj_cloud_no_normals), (255, 0, 255)) #pink
                     #start.x = center[0]-candidateObject.match.transform.translation.x
                     #start.y = center[1]-candidateObject.match.transform.translation.y
                     #start.z = center[2]-candidateObject.match.transform.translation.z
@@ -147,7 +147,7 @@ class VisualizationService(object):
                     marker.points.append(start)
                     marker.points.append(end)
                     markers.append(marker)
-                    self.color_pcl(self.pcl_segment, (255, 200, 0))
+                    self.color_pcl(self.pcl_segment, (255, 200, 0)) #orange
                     # for color in self.color_list:
                     #     c, rgb = color
                     #     if c == candidateObject.object.id:
@@ -162,9 +162,9 @@ class VisualizationService(object):
                     #     print((r,g,b))
                     #     self.color_list.append((candidateObject.object.id, (r, g, b)))
                 elif candidateObject.state == ObjectStateClass.STATIC:
-                    self.color_pcl(self.pcl_segment, (255, 255, 255))
+                    self.color_pcl(self.pcl_segment, (255, 255, 255)) #white
                 elif candidateObject.state == ObjectStateClass.UNKNOWN:
-                    self.color_pcl(self.pcl_segment, (0, 0, 255))
+                    self.color_pcl(self.pcl_segment, (0, 0, 255)) #blue
                 
                 self.marker_publisher.publish(markers)
 
@@ -192,6 +192,6 @@ class VisualizationService(object):
             self.candidate_publisher.publish(cand)
  
 if __name__ == '__main__':
-    rospy.init_node('edith_visualization_service')
+    rospy.init_node('object_visualization_service')
     service = VisualizationService(rospy.get_name())
     rospy.spin()

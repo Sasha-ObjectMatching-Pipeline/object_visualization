@@ -2,7 +2,7 @@ docker run --gpus all \
            --net=host \
 	   --device /dev/dri \
            --privileged \
-	   -v ~/v4r/edith:/root/share \
+	   -v ~/v4r/Sasha_pipeline:/root/share \
 	   -v /usr/lib/nvidia/:/usr/lib/nvidia/ \
            -e QT_X11_NO_MITSHM=1 \
            -e DISPLAY=unix$DISPLAY \

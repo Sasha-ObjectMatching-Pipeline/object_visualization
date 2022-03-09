@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>edith_visualization_service</name>
+  <name>object_visualization_service</name>
   <version>0.0.0</version>
-  <description>The edith_visualization_service package</description>
+  <description>The object_visualization_service package</description>
 
   <maintainer email="christian.eder@tuwien.ac.at">christian</maintainer>
 

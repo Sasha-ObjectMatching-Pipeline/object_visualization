@@ -1,15 +1,13 @@
-# Edith_Visualization
+# Object Visualization
 
-Visualization for Ediths Magic Pipeline
+Visualization for Object Matching. Static objects are coloured in white, removed ones in red, novel ones in green and displaced ones in pink (an arrow points from the old location to the new one).
 
 ## 1. build and run docker container
 
-add username und password in line 69,71 and 72 to have access like:
-
-`git clone https://username:password@rgit.acin.tuwien.ac.at/christianxeder/edith_visualization.git`
+`https://github.com/Sasha-ObjectMatching-Pipeline/object_visualization.git`
 
 ```
-cd edith_visualization_service/docker
+cd object_visualization_service/docker
 docker build -t "vis" . 
 run ./sh
 ```
@@ -20,14 +18,14 @@ run ./sh
 `roslaunch --wait mongodb_store mongodb_store.launch db_path:=/path/to/mongodb`
 
 ## 3. Start Visualization program
-`rosrun edith_visualization_service visualization.py`
+`rosrun object_visualization_service visualization.py`
 
 ## 4. Controll Visualization program via services
 
-Publish Pointcloud: `rosservice call /edith_visualization_service/visualize`
+Publish Pointcloud: `rosservice call /object_visualization_service/visualize`
 
-Clear Pointcloud: `rosservice call /edith_visualization_service/clear`
+Clear Pointcloud: `rosservice call /object_visualization_service/clear`
 
-Stop Publish Pointcloud: `rosservice call /edith_visualization_service/stop`
+Stop Publish Pointcloud: `rosservice call /object_visualization_service/stop`
 
 
